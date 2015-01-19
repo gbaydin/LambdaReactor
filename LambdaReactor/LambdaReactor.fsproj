@@ -1,0 +1,191 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition="'$(Configuration)' == ''">Debug</Configuration>
+    <Platform Condition="'$(Platform)' == ''">AnyCPU</Platform>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{719b9959-addf-4ca1-997d-398630d9f5e8}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{F2A71F9B-5D33-465A-A702-920D77279786}</ProjectTypeGuids>
+    <WebSharperProject>Bundle</WebSharperProject>
+    <WebSharperBundleOutputDir>Content</WebSharperBundleOutputDir>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <NuGetPackageImportStamp>f676e5da</NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <Tailcalls>false</Tailcalls>
+    <OutputPath>bin</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <Tailcalls>true</Tailcalls>
+    <OutputPath>bin</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <Name>LambdaReactor</Name>
+    <RootNamespace>LambdaReactor</RootNamespace>
+    <AssemblyName>LambdaReactor</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <WarningLevel>3</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Client.fs" />
+    <Compile Include="Main.fs" />
+    <Content Include="index.html" />
+    <Content Include="Web.config" />
+    <Content Include="Global.asax" />
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="IntelliFactory.Formlets">
+      <HintPath>..\packages\WebSharper.3.0.12.88-alpha\lib\net40\IntelliFactory.Formlets.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IntelliFactory.JavaScript">
+      <HintPath>..\packages\WebSharper.3.0.12.88-alpha\lib\net40\IntelliFactory.JavaScript.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IntelliFactory.Reactive">
+      <HintPath>..\packages\WebSharper.3.0.12.88-alpha\lib\net40\IntelliFactory.Reactive.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IntelliFactory.WebSharper">
+      <HintPath>..\packages\WebSharper.3.0.12.88-alpha\lib\net40\IntelliFactory.WebSharper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IntelliFactory.WebSharper.Collections">
+      <HintPath>..\packages\WebSharper.3.0.12.88-alpha\lib\net40\IntelliFactory.WebSharper.Collections.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IntelliFactory.WebSharper.Control">
+      <HintPath>..\packages\WebSharper.3.0.12.88-alpha\lib\net40\IntelliFactory.WebSharper.Control.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IntelliFactory.WebSharper.Core">
+      <HintPath>..\packages\WebSharper.3.0.12.88-alpha\lib\net40\IntelliFactory.WebSharper.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IntelliFactory.WebSharper.Formlets">
+      <HintPath>..\packages\WebSharper.3.0.12.88-alpha\lib\net40\IntelliFactory.WebSharper.Formlets.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IntelliFactory.WebSharper.Html.Client">
+      <HintPath>..\packages\WebSharper.3.0.12.88-alpha\lib\net40\IntelliFactory.WebSharper.Html.Client.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IntelliFactory.WebSharper.Html.Server">
+      <HintPath>..\packages\WebSharper.3.0.12.88-alpha\lib\net40\IntelliFactory.WebSharper.Html.Server.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IntelliFactory.WebSharper.InterfaceGenerator">
+      <HintPath>..\packages\WebSharper.3.0.12.88-alpha\lib\net40\IntelliFactory.WebSharper.InterfaceGenerator.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IntelliFactory.WebSharper.JavaScript">
+      <HintPath>..\packages\WebSharper.3.0.12.88-alpha\lib\net40\IntelliFactory.WebSharper.JavaScript.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IntelliFactory.WebSharper.JQuery">
+      <HintPath>..\packages\WebSharper.3.0.12.88-alpha\lib\net40\IntelliFactory.WebSharper.JQuery.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IntelliFactory.WebSharper.Sitelets">
+      <HintPath>..\packages\WebSharper.3.0.12.88-alpha\lib\net40\IntelliFactory.WebSharper.Sitelets.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IntelliFactory.WebSharper.Testing">
+      <HintPath>..\packages\WebSharper.3.0.12.88-alpha\lib\net40\IntelliFactory.WebSharper.Testing.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IntelliFactory.WebSharper.Web">
+      <HintPath>..\packages\WebSharper.3.0.12.88-alpha\lib\net40\IntelliFactory.WebSharper.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IntelliFactory.Xml">
+      <HintPath>..\packages\WebSharper.3.0.12.88-alpha\lib\net40\IntelliFactory.Xml.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Web" />
+  </ItemGroup>
+  <!-- F# targets -->
+  <Choose>
+    <When Condition="'$(VisualStudioVersion)' == '11.0'">
+      <PropertyGroup Condition="Exists('$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets')">
+        <FSharpTargetsPath>$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets</FSharpTargetsPath>
+      </PropertyGroup>
+    </When>
+    <Otherwise>
+      <PropertyGroup Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\FSharp\Microsoft.FSharp.Targets')">
+        <FSharpTargetsPath>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\FSharp\Microsoft.FSharp.Targets</FSharpTargetsPath>
+      </PropertyGroup>
+    </Otherwise>
+  </Choose>
+  <Import Project="$(FSharpTargetsPath)" />
+  <!-- Web targets -->
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Import Project="..\packages\WebSharper.3.0.12.88-alpha\build\WebSharper.targets" Condition="Exists('..\packages\WebSharper.3.0.12.88-alpha\build\WebSharper.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\WebSharper.3.0.12.88-alpha\build\WebSharper.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\WebSharper.3.0.12.88-alpha\build\WebSharper.targets'))" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties Guid="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>53549</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:50494/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+      <FlavorProperties Guid="{349c5851-65df-11da-9384-00065b846f21}" User="">
+        <WebProjectProperties>
+          <StartPageUrl>
+          </StartPageUrl>
+          <StartAction>CurrentPage</StartAction>
+          <AspNetDebugging>True</AspNetDebugging>
+          <SilverlightDebugging>False</SilverlightDebugging>
+          <NativeDebugging>False</NativeDebugging>
+          <SQLDebugging>False</SQLDebugging>
+          <ExternalProgram>
+          </ExternalProgram>
+          <StartExternalURL>
+          </StartExternalURL>
+          <StartCmdLineArguments>
+          </StartCmdLineArguments>
+          <StartWorkingDirectory>
+          </StartWorkingDirectory>
+          <EnableENC>True</EnableENC>
+          <AlwaysStartWebServerOnDebug>True</AlwaysStartWebServerOnDebug>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

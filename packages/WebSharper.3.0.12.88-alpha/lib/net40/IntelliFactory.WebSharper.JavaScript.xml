@@ -1,0 +1,704 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+<assembly><name>IntelliFactory.WebSharper.JavaScript</name></assembly>
+<members>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="P:IntelliFactory.WebSharper.JavaScript.Definition.Global">
+<summary>
+ The JavaScript global properties and functions can be used with all the built-in JavaScript objects.
+</summary>
+</member>
+<member name="T:IntelliFactory.WebSharper.JavaScript.Definition">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:IntelliFactory.WebSharper.JavaScript.Dom.Definition">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:IntelliFactory.WebSharper.JavaScript.Dom.Interfaces">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:IntelliFactory.WebSharper.JavaScript.Dom.Enumerations">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:IntelliFactory.WebSharper.JavaScript.Dom.Types">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:IntelliFactory.WebSharper.JavaScript.Dom.Util">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="P:IntelliFactory.WebSharper.JavaScript.Ecma.Definition.EcmaRegExp">
+<summary>
+ A resgular expression is an object that describes a pattern of characters.
+</summary>
+</member>
+<member name="P:IntelliFactory.WebSharper.JavaScript.Ecma.Definition.EcmaDate">
+<summary>
+ The Date object is used to work with dates and times.
+</summary>
+</member>
+<member name="P:IntelliFactory.WebSharper.JavaScript.Ecma.Definition.EcmaMath">
+<summary>
+ The Math object allows you to perform mathematical tasks.
+</summary>
+</member>
+<member name="P:IntelliFactory.WebSharper.JavaScript.Ecma.Definition.EcmaNumber">
+<summary>
+ The Number object is an object wrapper for primitive numeric values.
+</summary>
+</member>
+<member name="P:IntelliFactory.WebSharper.JavaScript.Ecma.Definition.EcmaBoolean">
+<summary>
+ The Boolean object is used to convert a non-Boolean value to a Boolean value (true or false).
+</summary>
+</member>
+<member name="P:IntelliFactory.WebSharper.JavaScript.Ecma.Definition.EcmaString">
+<summary>
+ The String object is used to manipulate a stored piece of text.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="P:IntelliFactory.WebSharper.JavaScript.Ecma.Definition.EcmaArray">
+<summary>
+ The Array object is used to store multiple values in a single variable.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:IntelliFactory.WebSharper.JavaScript.Ecma.Definition">
+<summary>
+ Defines the bindings to ECMA-262 5th edition JavaScript functions
+ and objects.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="T:IntelliFactory.WebSharper.JavaScript.Html5.Definition">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:IntelliFactory.WebSharper.JavaScript.Html5.WebSockets">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:IntelliFactory.WebSharper.JavaScript.Html5.WebGL">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:IntelliFactory.WebSharper.JavaScript.Html5.File">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:IntelliFactory.WebSharper.JavaScript.Html5.TypedArrays.DataView">
+<summary>
+ Warning: although part of the spec, may not work in IE10 as of 6/6/2013.
+</summary>
+</member>
+<member name="T:IntelliFactory.WebSharper.JavaScript.Html5.TypedArrays">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:IntelliFactory.WebSharper.JavaScript.Html5.General">
+
+</member>
+<member name="">
+
+</member>
+<member name="P:IntelliFactory.WebSharper.JavaScript.Html5.WebWorkers.AbstractWorker">
+<summary>
+ attribute Function onmessage;
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:IntelliFactory.WebSharper.JavaScript.Html5.WebWorkers">
+<summary>
+  Function onchecking;
+  Function onerror;
+  Function onnoupdate;
+  Function ondownloading;
+  Function onprogress;
+  Function onupdateready;
+  Function oncached;
+  Function onobsolete;
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="T:IntelliFactory.WebSharper.JavaScript.Html5.AppCache">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:IntelliFactory.WebSharper.JavaScript.Html5.WebStorage">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:IntelliFactory.WebSharper.JavaScript.Html5.Geolocation">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:IntelliFactory.WebSharper.JavaScript.Html5.Elements">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:IntelliFactory.WebSharper.JavaScript.Html5.AudioVideoCommon">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:IntelliFactory.WebSharper.JavaScript.Html5.Canvas">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:IntelliFactory.WebSharper.JavaScript.Html5.Utils">
+
+</member>
+</members>
+</doc>
