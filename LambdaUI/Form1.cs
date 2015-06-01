@@ -19,7 +19,6 @@ namespace LambdaUI
     public partial class Form1 : Form
     {
         private Experiment R;
-        private string[] Pop;
 
         private Graphics LabelDisplayG;
         private Bitmap LabelDisplayBuffer;

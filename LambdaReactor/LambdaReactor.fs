@@ -32,10 +32,17 @@ module Reactor =
     let inline isLambda (s:string) =
         s.StartsWith(@"\")
 
+    let inline isValidLambda (s:string) =
+        if s.StartsWith(@"\") then
+            let var = s.Substring(1, 1)
+            let v = s.Split([|'.'|])
+            v.[1].Contains(var)
+        else
+            false
 
     let rnd = Random()
 
-    let randomExp patomic pabstraction maxdepth =
+    let rec randomExp patomic pabstraction maxdepth =
         let rec expression size =
             if size = 1 then 
                 Atom(string (Convert.ToChar(rnd.Next(97, 122))))
@@ -44,13 +51,22 @@ module Reactor =
                 if r < patomic then
                     Atom(string (Convert.ToChar(rnd.Next(97, 122))))
                 elif r < patomic + pabstraction then
-                    Abstraction(string (Convert.ToChar(rnd.Next(97, 122))), expression (size - 1))
+                    let args = expression (size - 1)
+                    let argss = args.ToString().Replace(".", "").Replace(@"\", "")
+                    Abstraction(argss.Substring(rnd.Next(argss.Length), 1), args)
                 else
-                    Application(expression (size - 1), expression (size - 1))
+                    Application(Abstraction(string (Convert.ToChar(rnd.Next(97, 122))), expression (size - 1)), expression (size - 1))
         let ee = eval ((expression maxdepth).ToString())
         match ee with
-        | Some(s) -> s
-        | _ -> string (Convert.ToChar(rnd.Next(97, 122)))
+        | Some(s) -> 
+            if isLambda s then
+                if isValidLambda s then
+                    s
+                else
+                    randomExp patomic pabstraction maxdepth
+            else
+                s
+        | _ -> randomExp patomic pabstraction maxdepth
 
 
     let initPop n (seeds:string[]) =
@@ -68,17 +84,14 @@ module Reactor =
                 match c with
                 | Some(s) -> 
                     if s.Length <= maxlength then 
-                        if copyAllowed then 
+                        if (not copyAllowed) && ((s.CompareTo(e1) = 0) || (s.CompareTo(e2) = 0)) then
+                            "Elastic collision (product is a copy): " + e1 + " & " + e2
+                        elif (isLambda s) && (not (isValidLambda s)) then
+                            "Elastic collision (product is a bad lambda): " + e1 + " & " + e2
+                        else
                             p.[rnd.Next(p.Length)] <- s
                             p <- Array.sort p
                             "Collision: " + e1 + " & " + e2 + " -> " + s
-                        else
-                            if (s.CompareTo(e1) = 0) || (s.CompareTo(e2) = 0) then
-                                "Elastic collision (product is a copy): " + e1 + " & " + e2
-                            else
-                                p.[rnd.Next(p.Length)] <- s
-                                p <- Array.sort p
-                                "Collision: " + e1 + " & " + e2 + " -> " + s
                     else
                         "Elastic collision (product too long): " + e1 + " & " + e2
                 | _ -> "Elastic collision (product unknown): " + e1 + " & " + e2

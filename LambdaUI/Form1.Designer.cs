@@ -545,10 +545,10 @@
             this.numericUpDownPApplication.Size = new System.Drawing.Size(120, 20);
             this.numericUpDownPApplication.TabIndex = 4;
             this.numericUpDownPApplication.Value = new decimal(new int[] {
-            33,
+            1,
             0,
             0,
-            131072});
+            65536});
             // 
             // numericUpDownPAbstraction
             // 
@@ -569,10 +569,10 @@
             this.numericUpDownPAbstraction.Size = new System.Drawing.Size(120, 20);
             this.numericUpDownPAbstraction.TabIndex = 4;
             this.numericUpDownPAbstraction.Value = new decimal(new int[] {
-            33,
+            6,
             0,
             0,
-            131072});
+            65536});
             this.numericUpDownPAbstraction.ValueChanged += new System.EventHandler(this.numericUpDownPAbstraction_ValueChanged);
             // 
             // numericUpDownPAtomic
@@ -594,10 +594,10 @@
             this.numericUpDownPAtomic.Size = new System.Drawing.Size(120, 20);
             this.numericUpDownPAtomic.TabIndex = 4;
             this.numericUpDownPAtomic.Value = new decimal(new int[] {
-            33,
+            3,
             0,
             0,
-            131072});
+            65536});
             this.numericUpDownPAtomic.ValueChanged += new System.EventHandler(this.numericUpDownPAtomic_ValueChanged);
             // 
             // numericUpDownSeedMaxLength
