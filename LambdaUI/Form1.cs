@@ -41,10 +41,6 @@ namespace LambdaUI
             this.Close();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
 
         public void LogUpdate(string update, object detail)
         {
@@ -53,7 +49,7 @@ namespace LambdaUI
                 case "Reactor stopped":
                     buttonRun.Text = "Run";
                     break;
-                case "New collision":
+                case "Collision":
                     Pop = (string[]) detail;
                     richTextBoxPop.Lines = Pop;
                     break;
@@ -72,20 +68,22 @@ namespace LambdaUI
             {
                 if (buttonRun.Text == "Run")
                 {
-                    int PopulationSize = int.Parse(textBoxPopulationSize.Text);
-                    int Reactions = int.Parse(textBoxReactions.Text);
-                    int ReactionDelay = int.Parse(textBoxReactionDelay.Text);
-                    int ProductMaxLength = int.Parse(textBoxProductMaxLength.Text);
-                    int SeedMaxLength = int.Parse(textBoxSeedMaxLength.Text);
+                    int PopulationSize = (int)numericUpDownReactorSize.Value;
+                    int Epochs = (int)numericUpDownEpochs.Value;
+                    int ReactionDelay = (int)numericUpDownReactionDelay.Value;
+                    int ProductMaxLength = (int)numericUpDownProductMaxLength.Value;
+                    float PAtomic = (float)numericUpDownPAtomic.Value;
+                    float PAbstraction = (float)numericUpDownPAbstraction.Value;
+                    int SeedMaxLength = (int)numericUpDownSeedMaxLength.Value;
                     bool CopyAllowed = !checkBoxCopyProhibit.Checked;
                     bool Perturbations = checkBoxPerturbation.Checked;
-                    int PerturbationsCollisions = int.Parse(textBoxPerturbationsCollisions.Text);
-                    int PerturbationsObjects = int.Parse(textBoxPerturbationsObjects.Text);
+                    int PerturbationsCollisions = (int)numericUpDownPerturbationsCollisions.Value;
+                    int PerturbationsObjects = (int)numericUpDownPerturbationsObjects.Value;
                     richTextBoxSeeds.Text = richTextBoxSeeds.Text.Trim();
                     string[] Seeds = richTextBoxSeeds.Lines;
 
                     buttonRun.Text = "Stop";
-                    R = new Experiment(PopulationSize, Reactions, ReactionDelay, ProductMaxLength, SeedMaxLength, CopyAllowed, Perturbations, PerturbationsCollisions, PerturbationsObjects, Seeds, new LogUpdateDelegate(LogUpdate), LabelDisplayG, LabelDisplayBuffer, labelDisplay.BackColor);
+                    R = new Experiment(PopulationSize, Epochs, ReactionDelay, ProductMaxLength, PAtomic, PAbstraction, SeedMaxLength, CopyAllowed, Perturbations, PerturbationsCollisions, PerturbationsObjects, Seeds, new LogUpdateDelegate(LogUpdate), LabelDisplayG, LabelDisplayBuffer, labelDisplay.BackColor);
                     R.Run();
                 }
                 else
@@ -100,22 +98,18 @@ namespace LambdaUI
             }
         }
 
-        private void buttonTest_Click(object sender, EventArgs e)
+        private void buttonRandom_Click(object sender, EventArgs e)
         {
-            //richTextBoxSeeds.ResetText();
-            //richTextBoxSeeds.AppendText(@"\x0.x0" + Environment.NewLine);
-            //richTextBoxSeeds.AppendText(@"\x1.ax1" + Environment.NewLine);
-            //richTextBoxSeeds.AppendText(@"\x2.bx2" + Environment.NewLine);
-            //richTextBoxSeeds.AppendText(@"\x3.\x4.x3" + Environment.NewLine);
-
-            int NumSeeds = int.Parse(textBoxNumSeeds.Text);
-            int SeedMaxLength = int.Parse(textBoxSeedMaxLength.Text);
+            int NumSeeds = (int)numericUpDownNumSeeds.Value;
+            int SeedMaxLength = (int)numericUpDownSeedMaxLength.Value;
+            float PAtomic = (float)numericUpDownPAtomic.Value;
+            float PAbstraction = (float)numericUpDownPAbstraction.Value;
 
             string[] seeds = new string[NumSeeds];
 
             for (int i = 0; i < NumSeeds; i++ )
             {
-                seeds[i] = LambdaReactor.Reactor.randomExp(SeedMaxLength);
+                seeds[i] = LambdaReactor.Reactor.randomExp(PAtomic, PAbstraction, SeedMaxLength);
             }
             richTextBoxSeeds.Lines = seeds;
             richTextBoxPop.Clear();
@@ -126,7 +120,7 @@ namespace LambdaUI
             e.Graphics.DrawImage(LabelDisplayBuffer, 0, 0, LabelDisplayBuffer.Width, LabelDisplayBuffer.Height);
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void buttonCopy_Click(object sender, EventArgs e)
         {
             richTextBoxSeeds.Text = richTextBoxPop.Text;
             richTextBoxPop.Clear();
@@ -146,6 +140,24 @@ namespace LambdaUI
                 checkBoxPerturbation.Text = "Enabled";
             else
                 checkBoxPerturbation.Text = "Disabled";
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (R != null)
+                R.Stop();
+        }
+
+        private void numericUpDownPAtomic_ValueChanged(object sender, EventArgs e)
+        {
+            numericUpDownPAbstraction.Maximum = 1 - numericUpDownPAtomic.Value;
+            numericUpDownPApplication.Value = 1 - numericUpDownPAtomic.Value - numericUpDownPAbstraction.Value;
+        }
+
+        private void numericUpDownPAbstraction_ValueChanged(object sender, EventArgs e)
+        {
+            numericUpDownPAtomic.Maximum = 1 - numericUpDownPAbstraction.Value;
+            numericUpDownPApplication.Value = 1 - numericUpDownPAtomic.Value - numericUpDownPAbstraction.Value;
         }
     }
 
@@ -250,7 +262,7 @@ namespace LambdaUI
                 {
                     G.DrawLines(ComponentColors[i], Points[i]);
                     float y = GraphPosition.Bottom + i * 10;
-                    G.DrawString(ComponentNames[i], f, ForeColor, GraphPosition.X + 20, y);
+                    G.DrawString(ComponentNames[i] + " " + ((float)Data[i][Data[i].Count - 1]).ToString("f2"), f, ForeColor, GraphPosition.X + 20, y);
                     G.DrawLine(ComponentColors[i], GraphPosition.X, y + 5, GraphPosition.X + 15, y + 5);
                 }
             }
@@ -377,6 +389,8 @@ namespace LambdaUI
         private bool Perturbations;
         private int PerturbationsCollisions;
         private int PerturbationsObjects;
+        private float PAtomic;
+        private float PAbstraction;
         private string[] Seeds;
         private string[] Pop;
         private Thread T;
@@ -400,12 +414,14 @@ namespace LambdaUI
         private double MaxLength;
         private double Diversity;
 
-        public Experiment(int populationSize, int reactions, int reactionDelay, int productMaxLength, int seedMaxLength, bool copyAllowed, bool perturbations, int perturbationsCollisions, int perturbationsObjects, string[] seeds, LogUpdateDelegate logUpdate, Graphics displayG, Bitmap displayBuffer, Color backColor)
+        public Experiment(int populationSize, int reactions, int reactionDelay, int productMaxLength, float pAtomic, float pAbstraction, int seedMaxLength, bool copyAllowed, bool perturbations, int perturbationsCollisions, int perturbationsObjects, string[] seeds, LogUpdateDelegate logUpdate, Graphics displayG, Bitmap displayBuffer, Color backColor)
         {
             PopulationSize = populationSize;
             Reactions = reactions;
             ReactionDelay = reactionDelay;
             ProductMaxLength = productMaxLength;
+            PAtomic = pAtomic;
+            PAbstraction = pAbstraction;
             SeedMaxLength = seedMaxLength;
             CopyAllowed = copyAllowed;
             Perturbations = perturbations;
@@ -424,13 +440,13 @@ namespace LambdaUI
             F16 = new Font("Segoe UI", 16);
             F32 = new Font("Segoe UI", 32);
             Background = Color.FromArgb(22, 23, 22);
-            GAverageLength = new Graph2D(3, DisplayBufferG, new RectangleF(240, 10, 220, 170), BackColor, Color.White);
-            GAverageLength.SetComponent(0, "Min length", Color.Gray);
+            GAverageLength = new Graph2D(3, DisplayBufferG, new RectangleF(240, 10, 220, 150), BackColor, Color.White);
+            GAverageLength.SetComponent(0, "Max length", Color.White);
             GAverageLength.SetComponent(1, "Mean length", Color.Silver);
-            GAverageLength.SetComponent(2, "Max length", Color.White);
-            GDiversity = new Graph2D(1, DisplayBufferG, new RectangleF(470, 10, 220, 170), BackColor, Color.White);
-            GDiversity.SetComponent(0, "Diversity", Color.White);
-            GLengthHistogram = new GraphHistogram("Length distribution", 15, DisplayBufferG, new RectangleF(700, 10, 220, 170), BackColor, Color.White, Color.LightGray);
+            GAverageLength.SetComponent(2, "Min length", Color.Gray);
+            GDiversity = new Graph2D(1, DisplayBufferG, new RectangleF(470, 10, 220, 150), BackColor, Color.White);
+            GDiversity.SetComponent(0, "Reactor diversity", Color.White);
+            GLengthHistogram = new GraphHistogram("Length distribution", 15, DisplayBufferG, new RectangleF(700, 10, 220, 150), BackColor, Color.White, Color.LightGray);
 
             LogUpdate("Reactor initialized", null);
         }
@@ -455,25 +471,25 @@ namespace LambdaUI
             LogUpdate("Initializing reactor", null);
 
             Pop = Reactor.initPop(PopulationSize, Seeds);
-
+            HashSet<string> uniques = new HashSet<string>();
+            
             for (int r = 1; r <= Reactions; r++)
             {
-                LogUpdate("New collision", Pop);
-                Pop = Reactor.run(Pop, 1, ProductMaxLength, CopyAllowed);
+                Pop = Reactor.collide(Pop, ProductMaxLength, CopyAllowed);
+                LogUpdate("Collision", Pop);
 
 
                 if (r % PerturbationsCollisions == 0)
                     if (Perturbations)
                     {
+                        Pop = Reactor.perturb(Pop, PerturbationsObjects, PAtomic, PAbstraction, SeedMaxLength);
                         LogUpdate("Perturbation", null);
-                        Pop = Reactor.perturb(Pop, PerturbationsObjects, SeedMaxLength);
                     }
 
                 AverageLength = 0;
                 MaxLength = 0;
                 MinLength = double.MaxValue;
-                int uniques = 0;
-                bool unique;
+                uniques.Clear();
                 List<float> HistogramLength = new List<float>();
                 for (int i = 0; i < Pop.Length; i++)
                 {
@@ -482,27 +498,15 @@ namespace LambdaUI
                         MaxLength = Pop[i].Length;
                     if (Pop[i].Length <= MinLength)
                         MinLength = Pop[i].Length;
-
-                    unique = true;
-                    for (int j = 0; j < Pop.Length; j++)
-                    {
-                        if (i != j && Pop[i].CompareTo(Pop[j]) == 0)
-                        {
-                            unique = false;
-                            break;
-                        }
-                    }
-                    if (unique)
-                        uniques++;
-
                     HistogramLength.Add((float)Pop[i].Length);
+                    uniques.Add(Pop[i]);
                 }
-                Diversity = (double) uniques / (double) PopulationSize;
+                Diversity = (double)uniques.Count / (double)PopulationSize;
                 AverageLength /= (double)Pop.Length;
 
-                GAverageLength.AddValue(0, (float) MinLength);
+                GAverageLength.AddValue(0, (float)MaxLength);
                 GAverageLength.AddValue(1, (float) AverageLength);
-                GAverageLength.AddValue(2, (float) MaxLength);
+                GAverageLength.AddValue(2, (float)MinLength);
                 GDiversity.AddValue(0, (float)Diversity);
 
                 GLengthHistogram.SetValues(HistogramLength.ToArray());
@@ -519,17 +523,12 @@ namespace LambdaUI
         {
             DisplayBufferG.Clear(Background);
             DisplayBufferG.DrawString("Reaction", F12, Brushes.White, 0, 0);
-            DisplayBufferG.DrawString(percentage.ToString("n0") + "%", F10, Brushes.White, 0, 24);
-            DisplayBufferG.DrawString(reaction.ToString(), F32, Brushes.White, 90, -10);
-            DisplayBufferG.FillRectangle(Brushes.DimGray, 4, 56, 210, 8);
-            DisplayBufferG.FillRectangle(Brushes.Gainsboro, 4, 56, (float)(210.0 * percentage), 8);
+            DisplayBufferG.DrawString(reaction.ToString(), F32, Brushes.White, 0, 15);
+            DisplayBufferG.DrawString((percentage * 100).ToString() + "%", F10, Brushes.White, 4, 110);
+            DisplayBufferG.FillRectangle(Brushes.DimGray, 4, 150, 210, 8);
+            DisplayBufferG.FillRectangle(Brushes.Gainsboro, 4, 150, (float)(210.0 * percentage), 8);
             if (reaction > 0)
             {
-                DisplayBufferG.DrawString("Min length: " + MinLength.ToString("f2"), F10, Brushes.White, 0, 94);
-                DisplayBufferG.DrawString("Mean length: " + AverageLength.ToString("f2"), F10, Brushes.White, 0, 109);
-                DisplayBufferG.DrawString("Max length: " + MaxLength.ToString("f2"), F10, Brushes.White, 0, 124);
-                DisplayBufferG.DrawString("Population diversity: " + Diversity.ToString("f2"), F10, Brushes.White, 0, 139);
-
                 GAverageLength.Draw();
                 GDiversity.Draw();
                 GLengthHistogram.Draw();

@@ -48,17 +48,18 @@ module Reactor =
     //    | Application of Expression * Expression
 
 
-    let randomExp maxlength =
+    let randomExp patomic pabstraction maxlength =
         let rec exp size =
             if size = 1 then 
                 Atom(string (Convert.ToChar(rnd.Next(97, 122))))
             else
-                let r = rnd.Next(3)
-                match r with
-                | 0 -> Atom(string (Convert.ToChar(rnd.Next(97, 122))))
-                | 1 -> Abstraction(string (Convert.ToChar(rnd.Next(97, 122))), exp (size - 1))
-                | 2 -> Application(exp (size - 1), exp (size - 1))
-                | 3 -> Atom(string (Convert.ToChar(rnd.Next(97, 122))))
+                let r = rnd.NextDouble()
+                if r < patomic then
+                    Atom(string (Convert.ToChar(rnd.Next(97, 122))))
+                elif r < patomic + pabstraction then
+                    Abstraction(string (Convert.ToChar(rnd.Next(97, 122))), exp (size - 1))
+                else
+                    Application(exp (size - 1), exp (size - 1))
         let ee = eval ((exp maxlength).ToString())
         match ee with
         | Some(s) -> s
@@ -71,32 +72,28 @@ module Reactor =
     let apply e1 e2 =
         eval ("(" + e1 + ")" + e2)
 
-    let run (p:string[]) n maxlength copyAllowed =
+    let collide (p:string[]) maxlength copyAllowed =
         let p' = Array.copy p
-        for i = 0 to n do
-            let e1 = p'.[rnd.Next(p'.Length)]
-            if checkLambda e1 then
-                let e2 = p'.[rnd.Next(p'.Length)]
-                try
-                    let c = apply e1 e2
-                    match c with
-                    | Some(s) -> 
-                        if checkLambda s then
-                            if s.Length <= maxlength then 
-                                if s.CompareTo(e2.ToString()) = 0 then
-                                    if copyAllowed then p'.[rnd.Next(p.Length)] <- s
-                                else
-                                    p'.[rnd.Next(p.Length)] <- s
-                        else
-                            ()
-                    | _ -> ()
-                with
-                    | _ -> ()
+        let e1 = p'.[rnd.Next(p'.Length)]
+        //if checkLambda e1 then
+        let e2 = p'.[rnd.Next(p'.Length)]
+        try
+            let c = apply e1 e2
+            match c with
+            | Some(s) -> 
+                if s.Length <= maxlength then 
+                    if s.CompareTo(e2.ToString()) = 0 then
+                        if copyAllowed then p'.[rnd.Next(p.Length)] <- s
+                    else
+                        ()
+            | _ -> ()
+        with
+            | _ -> ()
 
         Array.sort p'
 
-    let perturb (p:string[]) objects maxlength =
+    let perturb (p:string[]) objects patomic pabstraction maxlength =
         let p' = Array.copy p
         for i = 0 to objects do
-            p'.[rnd.Next(p'.Length)] <- randomExp maxlength
+            p'.[rnd.Next(p'.Length)] <- randomExp patomic pabstraction maxlength
         Array.sort p'
