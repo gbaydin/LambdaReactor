@@ -312,7 +312,7 @@
             this.textBoxLog.Multiline = true;
             this.textBoxLog.Name = "textBoxLog";
             this.textBoxLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxLog.Size = new System.Drawing.Size(248, 158);
+            this.textBoxLog.Size = new System.Drawing.Size(248, 128);
             this.textBoxLog.TabIndex = 0;
             this.textBoxLog.WordWrap = false;
             // 
@@ -386,7 +386,6 @@
             0,
             0});
             this.numericUpDownReactionDelay.Name = "numericUpDownReactionDelay";
-            this.numericUpDownReactionDelay.ReadOnly = true;
             this.numericUpDownReactionDelay.Size = new System.Drawing.Size(120, 20);
             this.numericUpDownReactionDelay.TabIndex = 4;
             // 
@@ -410,7 +409,6 @@
             0,
             0});
             this.numericUpDownEpochs.Name = "numericUpDownEpochs";
-            this.numericUpDownEpochs.ReadOnly = true;
             this.numericUpDownEpochs.Size = new System.Drawing.Size(120, 20);
             this.numericUpDownEpochs.TabIndex = 4;
             this.numericUpDownEpochs.Value = new decimal(new int[] {
@@ -423,7 +421,7 @@
             // 
             this.numericUpDownReactorSize.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.numericUpDownReactorSize.Increment = new decimal(new int[] {
-            100,
+            10,
             0,
             0,
             0});
@@ -439,7 +437,6 @@
             0,
             0});
             this.numericUpDownReactorSize.Name = "numericUpDownReactorSize";
-            this.numericUpDownReactorSize.ReadOnly = true;
             this.numericUpDownReactorSize.Size = new System.Drawing.Size(120, 20);
             this.numericUpDownReactorSize.TabIndex = 4;
             this.numericUpDownReactorSize.Value = new decimal(new int[] {
@@ -451,6 +448,11 @@
             // numericUpDownProductMaxLength
             // 
             this.numericUpDownProductMaxLength.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.numericUpDownProductMaxLength.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
             this.numericUpDownProductMaxLength.Location = new System.Drawing.Point(136, 364);
             this.numericUpDownProductMaxLength.Maximum = new decimal(new int[] {
             1000,
@@ -463,7 +465,6 @@
             0,
             0});
             this.numericUpDownProductMaxLength.Name = "numericUpDownProductMaxLength";
-            this.numericUpDownProductMaxLength.ReadOnly = true;
             this.numericUpDownProductMaxLength.Size = new System.Drawing.Size(120, 20);
             this.numericUpDownProductMaxLength.TabIndex = 4;
             this.numericUpDownProductMaxLength.Value = new decimal(new int[] {
@@ -492,7 +493,6 @@
             0,
             0});
             this.numericUpDownPerturbationsObjects.Name = "numericUpDownPerturbationsObjects";
-            this.numericUpDownPerturbationsObjects.ReadOnly = true;
             this.numericUpDownPerturbationsObjects.Size = new System.Drawing.Size(120, 20);
             this.numericUpDownPerturbationsObjects.TabIndex = 4;
             this.numericUpDownPerturbationsObjects.Value = new decimal(new int[] {
@@ -521,7 +521,6 @@
             0,
             0});
             this.numericUpDownPerturbationsCollisions.Name = "numericUpDownPerturbationsCollisions";
-            this.numericUpDownPerturbationsCollisions.ReadOnly = true;
             this.numericUpDownPerturbationsCollisions.Size = new System.Drawing.Size(120, 20);
             this.numericUpDownPerturbationsCollisions.TabIndex = 4;
             this.numericUpDownPerturbationsCollisions.Value = new decimal(new int[] {
@@ -628,7 +627,7 @@
             // 
             this.numericUpDownNumSeeds.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.numericUpDownNumSeeds.Increment = new decimal(new int[] {
-            100,
+            10,
             0,
             0,
             0});
@@ -647,7 +646,7 @@
             this.numericUpDownNumSeeds.Size = new System.Drawing.Size(120, 20);
             this.numericUpDownNumSeeds.TabIndex = 4;
             this.numericUpDownNumSeeds.Value = new decimal(new int[] {
-            100,
+            50,
             0,
             0,
             0});
@@ -829,7 +828,7 @@
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(136, 24);
             this.label10.TabIndex = 20;
-            this.label10.Text = "Reaction delay (ms)";
+            this.label10.Text = "Collision delay (ms)";
             this.label10.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // label8
@@ -841,7 +840,7 @@
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(112, 24);
             this.label8.TabIndex = 21;
-            this.label8.Text = "Reaction epochs";
+            this.label8.Text = "Collision epochs";
             this.label8.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // label22
@@ -889,7 +888,7 @@
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(124, 24);
             this.label15.TabIndex = 14;
-            this.label15.Text = "Seed max. length";
+            this.label15.Text = "Seed max. nesting";
             this.label15.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // label14
@@ -941,6 +940,7 @@
             this.ClientSize = new System.Drawing.Size(1264, 861);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "LambdaReactor";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.tableLayoutPanel1.ResumeLayout(false);

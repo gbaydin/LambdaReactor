@@ -3,6 +3,7 @@
 open System
 open LambdaCalc
 open LambdaCalc.Core
+open System.Runtime.InteropServices
 
 module Reactor =
     let mutable delayBodyReduction = false
@@ -40,16 +41,8 @@ module Reactor =
 
     let rnd = Random()
 
-    //let test = eval "(((\x.\y.\z.(y)x)\x.(x)y)\u.\z.(u)z)y"
-
-    //type Expression =
-    //    | Atom        of AtomName
-    //    | Abstraction of AtomName * Expression
-    //    | Application of Expression * Expression
-
-
-    let randomExp patomic pabstraction maxlength =
-        let rec exp size =
+    let randomExp patomic pabstraction maxdepth =
+        let rec expression size =
             if size = 1 then 
                 Atom(string (Convert.ToChar(rnd.Next(97, 122))))
             else
@@ -57,10 +50,10 @@ module Reactor =
                 if r < patomic then
                     Atom(string (Convert.ToChar(rnd.Next(97, 122))))
                 elif r < patomic + pabstraction then
-                    Abstraction(string (Convert.ToChar(rnd.Next(97, 122))), exp (size - 1))
+                    Abstraction(string (Convert.ToChar(rnd.Next(97, 122))), expression (size - 1))
                 else
-                    Application(exp (size - 1), exp (size - 1))
-        let ee = eval ((exp maxlength).ToString())
+                    Application(expression (size - 1), expression (size - 1))
+        let ee = eval ((expression maxdepth).ToString())
         match ee with
         | Some(s) -> s
         | _ -> string (Convert.ToChar(rnd.Next(97, 122)))
@@ -72,28 +65,34 @@ module Reactor =
     let apply e1 e2 =
         eval ("(" + e1 + ")" + e2)
 
-    let collide (p:string[]) maxlength copyAllowed =
-        let p' = Array.copy p
-        let e1 = p'.[rnd.Next(p'.Length)]
+    let collide ([<Out>]p:string[] byref) maxlength copyAllowed =
+        let e1 = p.[rnd.Next(p.Length)]
         //if checkLambda e1 then
-        let e2 = p'.[rnd.Next(p'.Length)]
+        let e2 = p.[rnd.Next(p.Length)]
         try
             let c = apply e1 e2
             match c with
             | Some(s) -> 
                 if s.Length <= maxlength then 
                     if s.CompareTo(e2.ToString()) = 0 then
-                        if copyAllowed then p'.[rnd.Next(p.Length)] <- s
+                        if copyAllowed then 
+                            p.[rnd.Next(p.Length)] <- s
+                            p <- Array.sort p
+                            "Collision: " + e1 + " & " + e2 + " -> " + s
+                        else
+                            "Elastic collision (product is a copy): " + e1 + " & " + e2
                     else
-                        ()
-            | _ -> ()
+                        p.[rnd.Next(p.Length)] <- s
+                        p <- Array.sort p
+                        "Collision: " + e1 + " & " + e2 + " -> " + s
+                else
+                    "Elastic collision (product too long): " + e1 + " & " + e2
+            | _ -> "Elastic collision (product unknown): " + e1 + " & " + e2
         with
-            | _ -> ()
+            | _ -> "Elastic collision (product error): " + e1 + " & " + e2
 
-        Array.sort p'
 
-    let perturb (p:string[]) objects patomic pabstraction maxlength =
-        let p' = Array.copy p
+    let perturb ([<Out>]p:string[] byref) objects patomic pabstraction maxlength =
         for i = 0 to objects do
-            p'.[rnd.Next(p'.Length)] <- randomExp patomic pabstraction maxlength
-        Array.sort p'
+            p.[rnd.Next(p.Length)] <- randomExp patomic pabstraction maxlength
+        p <- Array.sort p

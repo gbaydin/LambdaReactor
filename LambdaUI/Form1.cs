@@ -14,7 +14,7 @@ using LambdaReactor;
 
 namespace LambdaUI
 {
-    public delegate void LogUpdateDelegate(string update, object detail);
+    public delegate void LogUpdateDelegate(string update, string[] pop);
 
     public partial class Form1 : Form
     {
@@ -42,24 +42,18 @@ namespace LambdaUI
         }
 
 
-        public void LogUpdate(string update, object detail)
+        public void LogUpdate(string update, string[] pop)
         {
             switch (update)
             { 
                 case "Reactor stopped":
                     buttonRun.Text = "Run";
                     break;
-                case "Collision":
-                    Pop = (string[]) detail;
-                    richTextBoxPop.Lines = Pop;
-                    break;
                 default:
+                    richTextBoxPop.Lines = pop;
                     break;
             }
-            textBoxLog.Text += update + Environment.NewLine;
-            textBoxLog.SelectionStart = textBoxLog.Text.Length - 1;
-            textBoxLog.ScrollToCaret();
-
+            textBoxLog.AppendText(update + Environment.NewLine);
         }
 
         private void buttonRun_Click(object sender, EventArgs e)
@@ -463,6 +457,7 @@ namespace LambdaUI
             if (T != null)
             {
                 T.Abort();
+                LogUpdate("Reactor stopped", null);
             }
         }
 
@@ -475,15 +470,15 @@ namespace LambdaUI
             
             for (int r = 1; r <= Reactions; r++)
             {
-                Pop = Reactor.collide(Pop, ProductMaxLength, CopyAllowed);
-                LogUpdate("Collision", Pop);
+                string result = Reactor.collide(out Pop, ProductMaxLength, CopyAllowed);
+                LogUpdate(result, Pop);
 
 
                 if (r % PerturbationsCollisions == 0)
                     if (Perturbations)
                     {
-                        Pop = Reactor.perturb(Pop, PerturbationsObjects, PAtomic, PAbstraction, SeedMaxLength);
-                        LogUpdate("Perturbation", null);
+                        Reactor.perturb(out Pop, PerturbationsObjects, PAtomic, PAbstraction, SeedMaxLength);
+                        LogUpdate("Perturbation", Pop);
                     }
 
                 AverageLength = 0;
@@ -515,16 +510,15 @@ namespace LambdaUI
                 
                 Thread.Sleep(ReactionDelay);
             }
-            
-            LogUpdate("Reactor stopped", null);
+
         }
 
         private void DrawStatus(int reaction, double percentage)
         {
             DisplayBufferG.Clear(Background);
-            DisplayBufferG.DrawString("Reaction", F12, Brushes.White, 0, 0);
+            DisplayBufferG.DrawString("Collision", F12, Brushes.White, 0, 0);
             DisplayBufferG.DrawString(reaction.ToString(), F32, Brushes.White, 0, 15);
-            DisplayBufferG.DrawString((percentage * 100).ToString() + "%", F10, Brushes.White, 4, 110);
+            DisplayBufferG.DrawString((percentage * 100).ToString() + "%", F10, Brushes.White, 4, 130);
             DisplayBufferG.FillRectangle(Brushes.DimGray, 4, 150, 210, 8);
             DisplayBufferG.FillRectangle(Brushes.Gainsboro, 4, 150, (float)(210.0 * percentage), 8);
             if (reaction > 0)
