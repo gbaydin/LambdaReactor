@@ -29,14 +29,8 @@ module Reactor =
         | _ -> None
 
 
-    let checkLambda s =
-        let res = Parser.LambdaParser.interpret dictionaryEnv s
-        match res with
-        | Parser.InterpreterResult.Success (expression, knownIdentifier) ->
-            match expression with
-            | Expression.Abstraction(_, _) -> true
-            | _ -> false
-        | _ -> false
+    let inline isLambda (s:string) =
+        s.StartsWith(@"\")
 
 
     let rnd = Random()
@@ -67,30 +61,31 @@ module Reactor =
 
     let collide ([<Out>]p:string[] byref) maxlength copyAllowed =
         let e1 = p.[rnd.Next(p.Length)]
-        //if checkLambda e1 then
-        let e2 = p.[rnd.Next(p.Length)]
-        try
-            let c = apply e1 e2
-            match c with
-            | Some(s) -> 
-                if s.Length <= maxlength then 
-                    if s.CompareTo(e2.ToString()) = 0 then
+        if isLambda e1 then
+            let e2 = p.[rnd.Next(p.Length)]
+            try
+                let c = apply e1 e2
+                match c with
+                | Some(s) -> 
+                    if s.Length <= maxlength then 
                         if copyAllowed then 
                             p.[rnd.Next(p.Length)] <- s
                             p <- Array.sort p
                             "Collision: " + e1 + " & " + e2 + " -> " + s
                         else
-                            "Elastic collision (product is a copy): " + e1 + " & " + e2
+                            if (s.CompareTo(e1) = 0) || (s.CompareTo(e2) = 0) then
+                                "Elastic collision (product is a copy): " + e1 + " & " + e2
+                            else
+                                p.[rnd.Next(p.Length)] <- s
+                                p <- Array.sort p
+                                "Collision: " + e1 + " & " + e2 + " -> " + s
                     else
-                        p.[rnd.Next(p.Length)] <- s
-                        p <- Array.sort p
-                        "Collision: " + e1 + " & " + e2 + " -> " + s
-                else
-                    "Elastic collision (product too long): " + e1 + " & " + e2
-            | _ -> "Elastic collision (product unknown): " + e1 + " & " + e2
-        with
-            | _ -> "Elastic collision (product error): " + e1 + " & " + e2
-
+                        "Elastic collision (product too long): " + e1 + " & " + e2
+                | _ -> "Elastic collision (product unknown): " + e1 + " & " + e2
+            with
+                | _ -> "Elastic collision (product error): " + e1 + " & " + e2
+        else
+            "Elastic collision (operator not lambda): " + e1
 
     let perturb ([<Out>]p:string[] byref) objects patomic pabstraction maxlength =
         for i = 0 to objects do
